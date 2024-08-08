@@ -1,12 +1,12 @@
 pipeline {
     agent any
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('del-docker-hub-auth')
+        DOCKERHUB_CREDENTIALS = credentials('rudi-dockerhub')
     }
     options {
-        buildDiscarder(logRotator(numToKeepStr: '20'))
+        buildDiscarder(logRotator(numToKeepStr: '5'))
         disableConcurrentBuilds()
-        timeout(time: 60, unit: 'MINUTES')
+        timeout(time: 10, unit: 'MINUTES')
         timestamps()
     }
     stages {
@@ -50,7 +50,7 @@ pipeline {
                 sh '''
                 cd ${WORKSPACE}/ui
                 TAG=$(git rev-parse --short=6 HEAD)
-                docker build -t devopseasylearning/eric_do_it_yourself_ui:${TAG} .
+                docker build -t rudiori/revive:ui-${TAG} .
                 '''
             }
         }
@@ -58,12 +58,12 @@ pipeline {
         stage('Push-image') {
            when{ 
          expression {
-           env.GIT_BRANCH == 'origin/main' }
+           env.GIT_BRANCH == 'origin/ui' }
            }
            steps {
                sh '''
                TAG=$(git rev-parse --short=6 HEAD)
-           docker push devopseasylearning/eric_do_it_yourself_ui:${TAG}  
+           docker push rudiori/revive:ui-${TAG}  
            
                '''
            }
