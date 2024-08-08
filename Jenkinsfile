@@ -16,7 +16,7 @@ pipeline {
             }
             steps {
                 sh '''
-                cd ui
+                cd oprr
                 mvn test 
                 '''
             }
@@ -48,7 +48,7 @@ pipeline {
         stage('build-image') {
             steps {
                 sh '''
-                cd ${WORKSPACE}/ui
+                cd ${WORKSPACE}/oprr
                 TAG=$(git rev-parse --short=6 HEAD)
                 docker build -t rudiori/revive:ui-${TAG} .
                 '''
@@ -71,9 +71,7 @@ pipeline {
 
 
 stage('trigger-deployment') {
-    agent { 
-        label 'deploy' 
-    }
+    agent any
     when { 
         expression { 
             env.GIT_BRANCH == 'origin/main' 
