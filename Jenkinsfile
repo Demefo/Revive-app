@@ -1,12 +1,12 @@
 pipeline {
     agent any
     environment {
-		DOCKERHUB_CREDENTIALS=credentials('del-docker-hub-auth')
+		DOCKERHUB_CREDENTIALS=credentials('rudi-dockerhub')
 	}
     options {
-        buildDiscarder(logRotator(numToKeepStr: '20'))
+        buildDiscarder(logRotator(numToKeepStr: '5'))
         disableConcurrentBuilds()
-        timeout (time: 60, unit: 'MINUTES')
+        timeout (time: 10, unit: 'MINUTES')
         timestamps()
       }
     stages {
@@ -53,7 +53,7 @@ pipeline {
                 sh '''
                 TAG=$(git rev-parse --short=6 HEAD)
                 cd ${WORKSPACE}/catalog
-                docker build -t devopseasylearning/eric_do_it_yourself_catalog:${TAG} .
+                docker build -t rudiori/revive:catalog-${TAG} .
                 '''
             }
         }
@@ -63,7 +63,7 @@ pipeline {
                 sh '''
                 TAG=$(git rev-parse --short=6 HEAD)
                 cd ${WORKSPACE}/catalog
-                docker build -t devopseasylearning/eric_do_it_yourself_catalog_db:${TAG} . -f Dockerfile-db
+                docker build -t rudiori/revive:catalog_db-${TAG} . -f Dockerfile-db
                 '''
             }
         }
@@ -72,13 +72,13 @@ pipeline {
         stage('Push-image') {
            when{ 
          expression {
-           env.GIT_BRANCH == 'origin/main' }
+           env.GIT_BRANCH == 'origin/catalog' }
            }
            steps {
                sh '''
                TAG=$(git rev-parse --short=6 HEAD)
-           docker push devopseasylearning/eric_do_it_yourself_catalog:${TAG}
-           docker push devopseasylearning/eric_do_it_yourself_catalog_db:${TAG}
+           docker push rudiori/revive:catalog-${TAG}
+           docker push rudiori/revive:catalog_db-${TAG}
            
                '''
            }
