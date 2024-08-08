@@ -16,7 +16,7 @@ pipeline {
             }
             steps {
                 sh '''
-                cd UI
+                cd ui
                 mvn test 
                 '''
             }
@@ -48,7 +48,7 @@ pipeline {
         stage('build-image') {
             steps {
                 sh '''
-                cd ${WORKSPACE}/UI
+                cd ${WORKSPACE}/ui
                 TAG=$(git rev-parse --short=6 HEAD)
                 docker build -t rudiori/revive:ui-${TAG} .
                 '''
