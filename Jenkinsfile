@@ -33,7 +33,7 @@ pipeline {
                 scannerHome = '/opt/sonar-scanner'
             }
             steps {
-                withSonarQubeEnv('Sonar') {
+                withSonarQubeEnv('Sonar-uk') {
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
