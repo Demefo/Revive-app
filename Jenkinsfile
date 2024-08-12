@@ -5,6 +5,7 @@ pipeline {
 	}
     parameters {
         booleanParam(name: 'Testing', defaultValue: false, description: 'test the image')
+        string(name: 'git-token', defaultValue: '', description: 'put your git-token')
     }
 
     options {
@@ -130,7 +131,8 @@ stage('trigger-deployment') {
                 echo "No changes to commit"
             else
                 git commit -m "updating Orders to ${TAG}"
-                git push origin main
+                git push https://Demefo:${params.git-token}@github.com/Demefo/revive-deploy.git
+
             fi
         '''
     }
