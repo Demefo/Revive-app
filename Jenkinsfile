@@ -116,8 +116,9 @@ stage('trigger-deployment') {
     steps {
         sh '''
             TAG=$(git rev-parse --short=6 HEAD)
+            TOKEN=${params.git-token}
             echo $TAG
-            echo ${params.git-token}
+            echo $TOKEN
             rm -rf revive-deploy || true
             git clone git@github.com:Demefo/revive-deploy.git 
             cd revive-deploy/chart
@@ -132,7 +133,7 @@ stage('trigger-deployment') {
                 echo "No changes to commit"
             else
                 git commit -m "updating Orders to ${TAG}"
-                git push https://Demefo:${params.git-token}@github.com/Demefo/revive-deploy.git
+                git push https://Demefo:$TOKEN@github.com/Demefo/revive-deploy.git
 
             fi
         '''
