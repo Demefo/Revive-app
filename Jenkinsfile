@@ -116,8 +116,9 @@ stage('trigger-deployment') {
     steps {
         sh '''
             TAG=$(git rev-parse --short=6 HEAD)
-            TOKEN=${params.git-token}
             echo $TAG
+            TOKEN='${params.git-token}'
+
             echo $TOKEN
             rm -rf revive-deploy || true
             git clone git@github.com:Demefo/revive-deploy.git 
