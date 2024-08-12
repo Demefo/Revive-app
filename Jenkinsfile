@@ -3,6 +3,10 @@ pipeline {
     environment {
 		DOCKERHUB_CREDENTIALS=credentials('rudi-dockerhub')
 	}
+    parameters {
+        booleanParam(name: 'Testing', defaultValue: false, description: 'test the image')
+    }
+
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         disableConcurrentBuilds()
@@ -12,6 +16,10 @@ pipeline {
     stages {
 
         stage('testing') {
+            when { 
+        expression { return params.Testing } 
+        }
+            
             agent {
                 docker { image 'maven:3.8.5-openjdk-18' }
             }
@@ -21,8 +29,8 @@ pipeline {
                 mvn test 
                 '''
             }
+        
         }
-
 
          stage('SonarQube analysis') {
             agent {
