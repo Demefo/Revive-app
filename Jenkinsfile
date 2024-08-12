@@ -94,6 +94,9 @@ pipeline {
          expression {
            env.GIT_BRANCH == 'orders' }
            }
+           when { 
+         expression { return params.Testing } 
+        }
            steps {
                sh '''
                TAG=$(git rev-parse --short=6 HEAD)
@@ -117,7 +120,7 @@ stage('trigger-deployment') {
         sh '''
             TAG=$(git rev-parse --short=6 HEAD)
             echo $TAG
-            TOKEN='${params.git-token}'
+            TOKEN="${params.git-token}"
 
             echo $TOKEN
             rm -rf revive-deploy || true
