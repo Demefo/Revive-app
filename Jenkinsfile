@@ -92,12 +92,9 @@ pipeline {
         stage('Push-image') {
            when{ 
          expression {
-           env.GIT_BRANCH == 'orders' }
+           env.GIT_BRANCH == 'orders' && params.Testing}
            }
-           when { 
-         expression { return params.Testing } 
-        }
-           steps {
+        steps {
                sh '''
                TAG=$(git rev-parse --short=6 HEAD)
            docker push rudiori/revive:orders-db-${TAG} 
