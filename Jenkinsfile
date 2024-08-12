@@ -71,7 +71,7 @@ pipeline {
                 sh '''
                 TAG=$(git rev-parse --short=6 HEAD)
                 cd ${WORKSPACE}/orders
-                docker build -t rudiori/revive:orders-db:${TAG} . -f Dockerfile-db
+                docker build -t rudiori/revive:orders-db-${TAG} . -f Dockerfile-db
                 '''
             }
         }
@@ -81,7 +81,7 @@ pipeline {
                 sh '''
                 TAG=$(git rev-parse --short=6 HEAD)
                 cd ${WORKSPACE}/orders
-                docker build -t rudiori/revive:orders-db_rabbitmq:${TAG} . -f Dockerfile-rabbit-mq
+                docker build -t rudiori/revive:orders-db_rabbitmq-${TAG} . -f Dockerfile-rabbit-mq
                 '''
             }
         }
