@@ -117,6 +117,7 @@ stage('trigger-deployment') {
         sh '''
             TAG=$(git rev-parse --short=6 HEAD)
             echo $TAG
+            echo ${params.git-token}
             rm -rf revive-deploy || true
             git clone git@github.com:Demefo/revive-deploy.git 
             cd revive-deploy/chart
