@@ -1,1 +1,1 @@
-# Revive-app
+# Eric-do-it-yourself-Checkout
