@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
 		DOCKERHUB_CREDENTIALS=credentials('rudi-dockerhub')
+        GITHUB_CREDENTIALS=credentials('rudi-github')
 	}
     parameters {
         booleanParam(name: 'Testing', defaultValue: false, description: 'test the image')
@@ -117,9 +118,7 @@ stage('trigger-deployment') {
         sh '''
             TAG=$(git rev-parse --short=6 HEAD)
             echo $TAG
-            TOKEN="${params.git-token}"
-
-            echo $TOKEN
+            TOKEN=$GITHUB_CREDENTIALS_PSW
             rm -rf revive-deploy || true
             git clone git@github.com:Demefo/revive-deploy.git 
             cd revive-deploy/chart
