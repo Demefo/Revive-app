@@ -12,7 +12,7 @@ pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         disableConcurrentBuilds()
-        timeout (time: 60, unit: 'MINUTES')
+        timeout (time: 5, unit: 'MINUTES')
         timestamps()
       }
     stages {
@@ -117,7 +117,6 @@ stage('trigger-deployment') {
     steps {
         sh '''
             TAG=$(git rev-parse --short=6 HEAD)
-            echo $TAG
             TOKEN=$GITHUB_CREDENTIALS_PSW
             rm -rf revive-deploy || true
             git clone git@github.com:Demefo/revive-deploy.git 
