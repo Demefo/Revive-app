@@ -6,7 +6,6 @@ pipeline {
 	}
     parameters {
         booleanParam(name: 'Testing', defaultValue: false, description: 'test the image')
-        string(name: 'git-token', defaultValue: '', description: 'put your git-token')
     }
 
     options {
@@ -93,7 +92,7 @@ pipeline {
         stage('Push-image') {
            when{ 
          expression {
-           env.GIT_BRANCH == 'orders' && params.Testing}
+           env.GIT_BRANCH == 'orders' }
            }
         steps {
                sh '''
