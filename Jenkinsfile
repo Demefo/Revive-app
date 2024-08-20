@@ -7,7 +7,7 @@ pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         disableConcurrentBuilds()
-        timeout (time: 10, unit: 'MINUTES')
+        timeout (time: 6, unit: 'MINUTES')
         timestamps()
       }
     parameters {
@@ -93,9 +93,7 @@ pipeline {
 
 
 stage('trigger-deployment') {
-    agent { 
-        label 'deploy' 
-    }
+    agent any
     when { 
         expression { 
             env.GIT_BRANCH == 'catalog' 
@@ -117,7 +115,7 @@ stage('trigger-deployment') {
             if git diff-index --quiet HEAD; then
                 echo "No changes to commit"
             else
-                git commit -m "updating Orders to ${TAG}"
+                git commit -m "updating catalog to ${TAG}"
                 git push https://Demefo:$TOKEN@github.com/Demefo/revive-deploy.git
 
             fi
