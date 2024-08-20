@@ -92,7 +92,7 @@ pipeline {
         stage('Push-image') {
            when{ 
          expression {
-           env.GIT_BRANCH == 'orders' && params.Testing}
+           env.GIT_BRANCH == 'orders' }
            }
         steps {
                sh '''
