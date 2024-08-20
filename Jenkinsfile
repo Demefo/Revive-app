@@ -10,9 +10,15 @@ pipeline {
         timeout (time: 60, unit: 'MINUTES')
         timestamps()
       }
+    parameters {
+        booleanParam(name: 'Testing', defaultValue: false, description: 'test the image')
+    }
     stages {
 
         stage('testing') {
+            when { 
+        expression { return params.Testing } 
+            }
             agent {
                 docker { image 'maven:3.8.7-openjdk-18' }
             }
