@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
 		DOCKERHUB_CREDENTIALS=credentials('rudi-dockerhub')
+        GITHUB_CREDENTIALS=credentials('rudi-github')
 	}
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
@@ -75,20 +76,21 @@ stage('trigger-deployment') {
     steps {
         sh '''
             TAG=$(git rev-parse --short=6 HEAD)
-            rm -rf Eric-do-it-yourself-devops-automation || true
-            git clone git@github.com:DEL-ORG/Eric-do-it-yourself-devops-automation.git 
-            cd Eric-do-it-yourself-devops-automation/chart
+            TOKEN=$GITHUB_CREDENTIALS_PSW
+            rm -rf revive-deploy || true
+            git clone git@github.com:Demefo/revive-deploy.git 
+            cd revive-deploy/chart
             yq eval '.assets.tag = "'"$TAG"'"' -i dev-values.yaml
-            
-            git config --global user.name "devopseasylearning"
-            git config --global user.email info@devopseasylearning.com
+            git config --global user.name "rudi"
+            git config --global user.email info@rudi.com
             
             git add -A
             if git diff-index --quiet HEAD; then
                 echo "No changes to commit"
             else
-                git commit -m "updating assets to ${TAG}"
-                git push origin main
+                git commit -m "updating Assets to ${TAG}"
+                git push https://Demefo:$TOKEN@github.com/Demefo/revive-deploy.git
+
             fi
         '''
     }
