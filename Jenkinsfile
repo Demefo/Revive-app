@@ -73,7 +73,7 @@ pipeline {
         stage('Push-image') {
            when{ 
          expression {
-           env.GIT_BRANCH == 'origin/catalog' }
+           env.GIT_BRANCH == 'catalog' }
            }
            steps {
                sh '''
