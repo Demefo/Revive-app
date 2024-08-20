@@ -119,7 +119,7 @@ stage('trigger-deployment') {
             if git diff-index --quiet HEAD; then
                 echo "No changes to commit"
             else
-                git commit -m "updating Orders to ${TAG}"
+                git commit -m "updating checkout to ${TAG}"
                 git push https://Demefo:$TOKEN@github.com/Demefo/revive-deploy.git
 
             fi
