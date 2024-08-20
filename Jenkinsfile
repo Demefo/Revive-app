@@ -74,7 +74,7 @@ pipeline {
         stage('Push-image') {
            when{ 
          expression {
-           env.GIT_BRANCH == 'origin/carts' }
+           env.GIT_BRANCH == 'carts' }
            }
            steps {
                sh '''
@@ -91,7 +91,7 @@ stage('trigger-deployment') {
     agent any
     when { 
         expression { 
-            env.GIT_BRANCH == 'origin/main' 
+            env.GIT_BRANCH == 'carts' 
         }
     }
     steps {
