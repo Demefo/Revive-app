@@ -10,10 +10,16 @@ pipeline {
         timeout (time: 60, unit: 'MINUTES')
         timestamps()
       }
+    parameters {
+        booleanParam(name: 'Testing', defaultValue: false, description: 'test the image')
+    }
     stages {
 
 
          stage('SonarQube analysis') {
+            when { 
+        expression { return params.Testing } 
+            }
             agent {
                 docker {
                   image 'sonarsource/sonar-scanner-cli:5.0.1'
