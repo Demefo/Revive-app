@@ -10,9 +10,15 @@ pipeline {
         timeout (time: 10, unit: 'MINUTES')
         timestamps()
       }
+    parameters {
+        booleanParam(name: 'Testing', defaultValue: false, description: 'test the image')
+    }
     stages {
 
         stage('test') {
+            when { 
+        expression { return params.Testing } 
+            }
             agent {
                 docker { image 'golang:1.22.5' 
                 args '-u root' }
