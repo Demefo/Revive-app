@@ -147,16 +147,16 @@ stage('trigger-deployment') {
    post {
    
    success {
-      slackSend (channel: '#development-alerts', color: 'good', message: "SUCCESSFUL: Application Eric-do-it-yourself-orders  Job '${env.JOB_NAME} [${env.TAG}]' (${env.BUILD_URL})")
+      slackSend (channel: '#development-alerts', color: 'good', message: "SUCCESSFUL: Application Rudi-revive  Job '${env.JOB_NAME} [${env.TAG}]' (${env.BUILD_URL})")
     }
 
  
     unstable {
-      slackSend (channel: '#development-alerts', color: 'warning', message: "UNSTABLE: Application Eric-do-it-yourself-orders  Job '${env.JOB_NAME} [${env.TAG}]' (${env.BUILD_URL})")
+      slackSend (channel: '#development-alerts', color: 'warning', message: "UNSTABLE: Application Rudi-revive  Job '${env.JOB_NAME} [${env.TAG}]' (${env.BUILD_URL})")
     }
 
     failure {
-      slackSend (channel: '#development-alerts', color: '#FF0000', message: "FAILURE: Application Eric-do-it-yourself-orders Job '${env.JOB_NAME} [${env.TAG}]' (${env.BUILD_URL})")
+      slackSend (channel: '#development-alerts', color: '#FF0000', message: "FAILURE: Application Rudi-revive Job '${env.JOB_NAME} [${env.TAG}]' (${env.BUILD_URL})")
     }
    
     cleanup {
